@@ -289,9 +289,14 @@ class LaravelLocalization
 
         $url = preg_replace('/'. preg_quote($urlQuery, '/') . '$/', '', $url);
 
-        // if ($locale && $translatedRoute = $this->findTranslatedRouteByUrl($url, $attributes, $this->currentLocale)) {
-        //     return $this->getURLFromRouteNameTranslated($locale, $translatedRoute, $attributes, $forceDefaultLocation).$urlQuery;
-        // }
+        if(!empty($attributes) && empty($this->routeName))
+        {
+            // continue;
+        }else{
+            if ($locale && $translatedRoute = $this->findTranslatedRouteByUrl($url, $attributes, $this->currentLocale)) {
+                return $this->getURLFromRouteNameTranslated($locale, $translatedRoute, $attributes, $forceDefaultLocation).$urlQuery;
+            }
+        }
 
         $base_path = $this->request->getBaseUrl();
         $parsed_url = parse_url($url);
